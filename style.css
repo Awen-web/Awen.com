@@ -1,0 +1,313 @@
+/* ==========================================================================
+   VARIABLES Y CONFIGURACIÓN BASE
+   ========================================================================== */
+:root {
+    --blue-real: #0B56D1;
+    --purple-deep: #6930C3;
+    --magenta-glow: #D81B60;
+    --pure-white: #ffffff;
+    --font-heading: 'Syne', sans-serif;
+    --font-main: 'Plus Jakarta Sans', sans-serif;
+}
+
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    /* Quitamos el cuadro azul por defecto de los celulares para que no arruine la estética */
+    -webkit-tap-highlight-color: transparent; 
+}
+
+body {
+    background: linear-gradient(135deg, #020611, #06020e, #0c0106);
+    background-attachment: fixed;
+    font-family: var(--font-main);
+    color: var(--pure-white);
+    overflow-x: hidden;
+}
+
+.text-center-forced {
+    text-align: center !important;
+    display: block !important;
+    width: 100% !important;
+}
+
+/* ==========================================================================
+   PRELOADER Y ELEMENTOS FIJOS
+   ========================================================================== */
+#preloader {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: #000000;
+    z-index: 20000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeOutContainer 0.5s cubic-bezier(0.25, 1, 0.5, 1) 3.2s forwards;
+}
+.preloader-content { text-align: center; }
+.logo-wrapper { position: relative; width: 180px; height: 180px; margin: 0 auto 20px auto; }
+.neon-aura {
+    position: absolute;
+    top: 50%; left: 50%; width: 160px; height: 160px;
+    background: linear-gradient(45deg, var(--blue-real), var(--magenta-glow));
+    filter: blur(45px); border-radius: 50%; transform: translate(-50%, -50%);
+    opacity: 0; animation: auraGlowIntro 1.5s ease-in-out infinite alternate;
+}
+.loader-logo-real { width: 100%; height: 100%; object-fit: contain; animation: showRealLogo 0.8s ease forwards; }
+.preloader-text { font-family: var(--font-heading); font-size: 1.3rem; letter-spacing: 5px; font-weight: 800; color: var(--pure-white); opacity: 0; animation: fadeInTextIntro 0.5s ease 0.8s forwards; }
+
+@keyframes showRealLogo { to { opacity: 1; } }
+@keyframes auraGlowIntro { 0% { opacity: 0.4; } 100% { opacity: 0.8; } }
+@keyframes fadeInTextIntro { to { opacity: 1; } }
+@keyframes fadeOutContainer { to { opacity: 0; visibility: hidden; } }
+
+/* STICKY NAV */
+.nav-bar {
+    position: fixed;
+    top: 0; left: 0; width: 100%;
+    background: rgba(2, 6, 17, 0.75); backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05); z-index: 900; padding: 12px 0;
+    transform: translateY(-100%); animation: slideNavDown 0.5s ease 3.4s forwards;
+}
+@keyframes slideNavDown { to { transform: translateY(0); } }
+.nav-content { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; padding: 0 20px; gap: 15px; }
+.mini-logo { width: 35px; height: 35px; object-fit: contain; }
+.nav-brand-text { font-family: var(--font-heading); font-size: 1rem; font-weight: 700; letter-spacing: 2px; }
+
+/* HERO AREA */
+.hero-area { height: 70vh; display: flex; justify-content: center; align-items: center; text-align: center; padding: 20px; }
+.main-logo { width: 140px; margin-bottom: 20px; animation: floatingLogo 4s infinite ease-in-out; }
+@keyframes floatingLogo { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+.brand-name { font-family: var(--font-heading); font-size: 3.2rem; letter-spacing: 2px; margin-bottom: 12px; font-weight: 800; }
+.brand-slogan { font-size: 1.1rem; font-weight: 300; opacity: 0.85; }
+
+/* ==========================================================================
+   ESTRUCTURA DE BLOQUES DE CRISTAL (GLASSMORPHISM)
+   ========================================================================== */
+.wrapper { max-width: 1200px; margin: 0 auto; padding: 0 20px 100px 20px; }
+.grid-container { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; }
+
+.glass-block {
+    grid-column: span 4;
+    background: rgba(255, 255, 255, 0.05); 
+    backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 24px; padding: 40px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    /* Transición elástica y fluida para que el brinco se note premium */
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s, box-shadow 0.3s !important;
+}
+
+/* 💻 EFECTO EN COMPUTADORA (Al pasar el mouse) */
+@media (min-width: 901px) {
+    .glass-block:hover {
+        transform: translateY(-10px) !important;
+        background: rgba(255, 255, 255, 0.08) !important;
+        box-shadow: 0 30px 60px rgba(11, 86, 209, 0.15) !important;
+    }
+}
+
+/* 📱 EFECTO EN TELEFONO CELULAR (Se activa inmediatamente al pasar el dedo encima) */
+.glass-block.touch-active {
+    transform: translateY(-12px) !important; /* Brinco claro en el móvil */
+    background: rgba(255, 255, 255, 0.09) !important;
+    box-shadow: 0 30px 60px rgba(216, 27, 96, 0.18) !important; /* Destello magenta sutil bajo el cuadro */
+}
+
+.col-12 { grid-column: span 12; }
+.col-8 { grid-column: span 8; }
+.col-6 { grid-column: span 6; }
+
+/* Títulos finos de tarjetas internos (image_65fddc.png) */
+.block-tag { 
+    font-family: var(--font-heading) !important;
+    color: var(--pure-white) !important; 
+    font-weight: 700 !important; 
+    text-transform: uppercase !important; 
+    font-size: 1.15rem !important; 
+    letter-spacing: 1px !important; 
+    display: block !important; 
+    margin-bottom: 12px !important; 
+    line-height: 1.3 !important;
+}
+
+/* Títulos "¿Quiénes somos?" fijos (image_65fd84.png) */
+.main-title-tag {
+    font-family: var(--font-heading) !important;
+    font-size: 1.5rem !important; 
+    font-weight: 700 !important;
+    color: var(--pure-white) !important;
+    margin-bottom: 15px !important;
+    letter-spacing: 1px !important;
+}
+
+/* Cápsula de Invitaciones Digitales (image_65fe1e.png) */
+.plus-tag-container {
+    display: block !important;
+    margin-bottom: 25px !important;
+}
+.plus-tag { 
+    font-family: var(--font-heading) !important;
+    background: linear-gradient(90deg, var(--magenta-glow), var(--purple-deep)) !important; 
+    display: inline-block !important; 
+    padding: 8px 20px !important; 
+    border-radius: 50px !important; 
+    font-weight: 700 !important; 
+    font-size: 1.05rem !important; 
+    text-transform: uppercase !important; 
+    letter-spacing: 1px !important;
+    color: var(--pure-white) !important;
+}
+
+.mission-text { font-size: 0.95rem; font-weight: 300; line-height: 1.7; opacity: 0.85; }
+.block-description { font-size: 0.9rem; font-weight: 300; opacity: 0.8; line-height: 1.6; }
+.price-badge { font-size: 1.2rem; font-weight: 700; color: #00ff88; margin-bottom: 15px; }
+
+/* Título de sección "Conoce nuestros paquetes" */
+.section-title-container {
+    grid-column: span 12 !important;
+    text-align: center !important;
+    padding: 60px 0 30px 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+}
+.section-main-title {
+    font-family: var(--font-heading) !important; 
+    font-size: 1.6rem !important; 
+    font-weight: 700 !important; 
+    color: #ffffff !important; 
+    letter-spacing: 4px !important;
+    margin: 0 auto !important;
+    text-transform: uppercase !important;
+}
+
+/* LISTAS DE SERVICIOS INTERNOS */
+.sub-services-list { list-style: none; }
+.sub-service-item { padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.sub-service-item:last-child { border-bottom: none; }
+.sub-service-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.service-item-title { font-size: 1.05rem; font-weight: 700; color: var(--pure-white); }
+.sub-service-price { font-weight: 700; color: #00ff88; font-size: 0.95rem; }
+.sub-service-desc { font-size: 0.85rem; font-weight: 300; opacity: 0.75; line-height: 1.5; }
+
+/* ==========================================================================
+   SECCIÓN DE CONTACTO BAJA Y SOCIAL MEDIA (image_660102.png)
+   ========================================================================== */
+.footer-unified-block { 
+    background: rgba(255, 255, 255, 0.04) !important; 
+    border: 1px solid rgba(255, 255, 255, 0.15) !important; 
+    padding: 40px 30px !important; 
+    margin-top: 50px !important;
+    text-align: center !important;
+}
+
+.contact-title { 
+    font-family: var(--font-heading) !important; 
+    font-size: 1.5rem !important; 
+    margin-bottom: 12px !important; 
+    font-weight: 700 !important; 
+    text-align: center !important; 
+}
+.contact-sub { font-size: 0.9rem !important; font-weight: 300 !important; opacity: 0.8 !important; margin-bottom: 25px !important; text-align: center !important; }
+.footer-social-row { display: flex !important; gap: 15px !important; justify-content: center !important; flex-wrap: wrap !important; margin-bottom: 20px !important; width: 100% !important; }
+
+.social-footer-link {
+    color: var(--pure-white) !important; text-decoration: none !important; padding: 10px 22px !important;
+    background: rgba(255, 255, 255, 0.03) !important; border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 50px !important; font-size: 0.85rem !important; font-weight: 700 !important; 
+    transition: all 0.3s ease !important;
+    display: inline-flex !important; align-items: center !important; gap: 8px !important;
+}
+.social-footer-link:hover, .social-footer-link.touch-active { 
+    background: var(--pure-white) !important; 
+    color: #020611 !important; 
+    transform: translateY(-4px) !important; 
+}
+
+.whatsapp-interact-zone {
+    margin-top: 40px !important; 
+    width: 100% !important;
+    display: block !important;
+    text-align: center !important;
+}
+.interact-title {
+    font-family: var(--font-heading) !important;
+    font-size: 1.35rem !important; 
+    font-weight: 700 !important; 
+    margin-bottom: 12px !important; 
+    color: var(--pure-white) !important;
+    text-align: center !important;
+    line-height: 1.4 !important;
+}
+.interact-desc {
+    font-size: 0.9rem !important; font-weight: 300 !important; opacity: 0.8 !important; max-width: 600px !important;
+    margin: 0 auto 25px auto !important; line-height: 1.6 !important; text-align: center !important;
+}
+
+/* BOTÓN WHATSAPP GRANDE CENTRAL */
+.btn-container-center {
+    display: flex !important; 
+    justify-content: center !important; 
+    align-items: center !important;
+    width: 100% !important;
+    margin-top: 15px !important;
+}
+.interact-wa-btn {
+    display: inline-flex !important; 
+    align-items: center !important; 
+    justify-content: center !important; 
+    gap: 12px !important;
+    background: linear-gradient(90deg, #25D366, #11998e) !important;
+    color: #ffffff !important; 
+    text-decoration: none !important; 
+    padding: 14px 36px !important; 
+    border-radius: 50px !important; 
+    font-weight: 700 !important; 
+    font-size: 0.95rem !important; 
+    letter-spacing: 0.5px !important;
+    box-shadow: 0 8px 20px rgba(37, 211, 102, 0.25) !important;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease !important;
+    border: none !important;
+    cursor: pointer !important;
+}
+.interact-wa-btn:hover, .interact-wa-btn.touch-active {
+    transform: translateY(-6px) !important;
+    box-shadow: 0 15px 30px rgba(37, 211, 102, 0.45) !important;
+}
+
+/* BOTÓN WHATSAPP FLOTANTE INTEGRADO */
+.floating-container { position: fixed; bottom: 30px; right: 30px; z-index: 2000; }
+.wa-btn {
+    background: #25D366; display: flex; align-items: center; text-decoration: none; color: #fff;
+    padding: 6px 6px 6px 18px; border-radius: 50px; box-shadow: 0 8px 25px rgba(37, 211, 102, 0.2);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.wa-text { font-weight: 700; margin-right: 10px; font-size: 0.85rem; }
+.wa-icon { background: #fff; color: #25D366; width: 32px; height: 32px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.1rem; }
+.wa-btn:hover, .wa-btn.touch-active { 
+    transform: translateY(-5px) scale(1.02); 
+}
+
+/* ==========================================================================
+   RESPONSIVO MÓVIL
+   ========================================================================== */
+@media (max-width: 900px) {
+    .grid-container { gap: 16px; }
+    .glass-block, .col-8, .col-6 { grid-column: span 12; padding: 35px 25px; }
+    
+    .brand-name { font-size: 2.2rem; }
+    .section-main-title { font-size: 1.3rem !important; letter-spacing: 2px !important; }
+    .block-tag { font-size: 1.1rem !important; }
+    .plus-tag { font-size: 0.95rem !important; padding: 6px 16px !important; }
+    .main-title-tag { font-size: 1.3rem !important; }
+    .interact-title { font-size: 1.15rem !important; }
+    .contact-title { font-size: 1.25rem !important; }
+    
+    .footer-social-row { flex-direction: column; gap: 12px; }
+    .social-footer-link { width: 100% !important; justify-content: center !important; }
+    .interact-wa-btn { width: 100% !important; max-width: 340px !important; padding: 14px 15px !important; font-size: 0.9rem !important; }
+    
+    .section-title-container { padding: 40px 0 20px 0 !important; }
+}
